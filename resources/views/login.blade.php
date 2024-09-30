@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6 col-sm-8">
             <div class="card p-5">
-                
+
                 <!-- logo -->
                 <div class="text-center p-3">
                     <img src="assets/images/logo.png" alt="Notes logo">
@@ -14,19 +14,39 @@
                 <!-- form -->
                 <div class="row justify-content-center">
                     <div class="col-md-10 col-12">
-                        <form action="#" method="post">
+                        <form action="/loginSubmit" method="post" novalidate>
+                            @csrf
                             <div class="mb-3">
                                 <label for="text_username" class="form-label">Username</label>
-                                <input type="text" class="form-control bg-dark text-info" name="text_username" required>
+                                <input type="email" class="form-control bg-dark text-info" name="text_username" required value="{{ old('text_username') }}">
+                                <!-- shoe error -->
+                                @error('text_username')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <label for="text_password" class="form-label">Password</label>
-                                <input type="password" class="form-control bg-dark text-info" name="text_password" required>
+                                <input type="password" class="form-control bg-dark text-info" name="text_password" required value="{{ old('text_password') }}">
+                                <!-- shoe error -->
+                                @error('text_password')
+                                    <div class="text-danger">
+                                        {{$message}}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-secondary w-100">LOGIN</button>
                             </div>
                         </form>
+
+                        <!-- invalid login -->
+                         @if(session('loginError'))
+                            <div class="alert alert-danger text-center">
+                                {{session('loginError')}}
+                            </div>
+                         @endif
                     </div>
                 </div>
 
@@ -35,6 +55,16 @@
                     <small>&copy; <?= date('Y') ?> Notes</small>
                 </div>
 
+                <!-- errors -->
+                <!-- @if($errors->any())
+                    <div class="alert alert-danger mt-3">
+                        <ul class="m-0">
+                            @foreach($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif -->
             </div>
         </div>
     </div>
